@@ -7,8 +7,9 @@ import { HttpService } from "./HttpService.js";
  */
 class TodoList {
 
-  constructor(HttpService) {
+  constructor(HttpService, itemFactory) {
     this.httpService = HttpService;
+    this.itemFactory = itemFactory;
     this.btnCreateTask = document.getElementById("btnCreateTask");
     this.todoList = document.querySelector(".todo-list");
     this.taskInput = document.getElementById("taskTitle");
@@ -20,11 +21,10 @@ class TodoList {
    */
   initList = function() {
     this.loadTasksAPI()
-      .then(function(tasks) {
-        console.log('tasks -> ', tasks);
-        tasks.forEach(function(currentTask) {
-          this.appendItem(currentTask);
-        });
+      .then((tasks) => {
+        for (let task of tasks) {
+          this.appendItem(task);
+        }
       })
       .catch(function(error) {
         // Do nothing, if you want to debug, uncomment console.log.
@@ -95,36 +95,24 @@ class TodoList {
    */
   createTask = function(event) {
     event.preventDefault();
-
-    console.log("createTask -> ", this.taskInput);
     
     var newItem = {
       title: this.taskInput.value,
       done: false
     };
-    fetch(this.httpService.API_URL, {
-      headers: { "Content-Type": "application/json; charset=utf-8" },
-      method: "POST",
-      body: JSON.stringify(newItem)
-    })
-      .then(function(response) {
-        switch (response.status) {
-          case 201:
-            return response.json();
-            break;
-        }
-      })
-      .then(function(newTask) {
+    
+    this.httpService.post(newItem).then(
+      (newTask) => {
         this.appendItem(newTask);
         this.taskInput.value = "";
         this.taskInput.focus();
       })
-      .catch(function(error) {
+      .catch((error) => {
         // Do nothing, if you want to debug, uncomment console.log.
         // console.log(error);
       });
 
-      // Implement loading screen overlay for this.
+    // Implement loading screen overlay for this.  
   };
 
   /**
@@ -153,7 +141,7 @@ class TodoList {
    * needed
    */
   appendItem = function(item) {
-    var newItem = TodoList.ItemFactory.get(item.id, item.title, item.done);
+    var newItem =this.itemFactory.generateListItem(item.id, item.title, item.done);
     
     // Add event to ".js-toggle-complete" hook, use toggleComplete function.
     // Add event to ".js-edit" hook, use toggleEdit function.
@@ -165,12 +153,15 @@ class TodoList {
 /**
  * Module used to create items dynamically to the list
  */
-TodoList.ItemFactory = (function() {
+class ItemFactory {
+  constructor() {
+  }
+
   /**
    * Creates html elements to be appended to the list
    * and sets data on it
    */
-  var generateListItem = function(id, title, done) {
+  generateListItem(id, title, done) {
     var newListItem = document.createElement("div");
     newListItem.dataset.id = id;
     newListItem.dataset.done = done == true;
@@ -192,14 +183,11 @@ TodoList.ItemFactory = (function() {
     `;
 
     return newListItem;
-  };
+  }
+}
 
-  return {
-    get: generateListItem
-  };
-})();
-
-(function(TodoList) {
-  var myTodoList = new TodoList(HttpService);
+(function() {
+  var myItemFactory = new ItemFactory();
+  var myTodoList = new TodoList(HttpService, myItemFactory);
   myTodoList.initList();
-})(TodoList);
+})();
