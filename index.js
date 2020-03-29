@@ -81,8 +81,14 @@ class TodoList {
      * data.title holds the updated value from API
     */
     if (isSaveOperation) {
-      this.updateTask(taskElement).then(function(data) {
+      this.toggleLoadingOverlay();
+      this.updateTask(taskElement).then((data) => {
         // do something
+        this.toggleLoadingOverlay();
+      }).catch((error) => {
+        // Do nothing, if you want to debug, uncomment console.log.
+        // console.log(error);
+        this.toggleLoadingOverlay();
       });
     } else {
       editField.focus();
@@ -101,18 +107,19 @@ class TodoList {
       done: false
     };
     
+    this.toggleLoadingOverlay();
     this.httpService.post(newItem).then(
       (newTask) => {
         this.appendItem(newTask);
         this.taskInput.value = "";
         this.taskInput.focus();
+        this.toggleLoadingOverlay();
       })
       .catch((error) => {
         // Do nothing, if you want to debug, uncomment console.log.
         // console.log(error);
+        this.toggleLoadingOverlay();
       });
-
-    // Implement loading screen overlay for this.  
   };
 
   /**
@@ -141,13 +148,23 @@ class TodoList {
    * needed
    */
   appendItem = function(item) {
-    var newItem =this.itemFactory.generateListItem(item.id, item.title, item.done);
+    var newItem = this.itemFactory.generateListItem(item.id, item.title, item.done);
     
     // Add event to ".js-toggle-complete" hook, use toggleComplete function.
     // Add event to ".js-edit" hook, use toggleEdit function.
 
     this.todoList.appendChild(newItem);
   };
+
+  toggleLoadingOverlay() {
+    var loadingOverlay = document.getElementById("loading-overlay");
+    var style = window.getComputedStyle(loadingOverlay),
+    var display = style.getPropertyValue("display");
+    if (display === "none")
+      loadingOverlay.style.display = "initial";
+    else
+      loadingOverlay.style.display = "none";
+  }
 };
 
 /**
