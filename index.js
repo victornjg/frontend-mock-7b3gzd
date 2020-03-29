@@ -162,7 +162,7 @@ class ItemFactory {
    * and sets data on it
    */
   generateListItem(id, title, done) {
-    var newListItem = document.createElement("div");
+    var newListItem = document.createElement("li");
     newListItem.dataset.id = id;
     newListItem.dataset.done = done == true;
     newListItem.dataset.value = title;

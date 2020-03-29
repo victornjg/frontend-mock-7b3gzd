@@ -80,9 +80,39 @@ h1 {
   color: #d5d5d5;
   border: none;
   padding: 0;
-  min-width: 32px;
-  min-height: 32px;
   font-size: 1em;
+}
+
+@media screen and (max-width: 575px) {
+  .todo-list li button {
+    min-width: 48px;
+    min-height: 48px;
+  }
+
+  .todo-list {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .todo-list li {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  .todo-list li:first-child {
+    padding-top: 8px;
+  }
+
+  .todo-list li:last-child {
+    padding-bottom: 8px;
+  }
+}
+
+@media screen and (min-width: 576px) {
+  .todo-list li button {
+    min-width: 32px;
+    min-height: 32px;
+  }
 }
 
 .completed .btn-edit {
