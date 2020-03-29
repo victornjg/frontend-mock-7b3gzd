@@ -1,0 +1,9 @@
+{
+  "name": "js-2mixzq",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "sass": "^1.23.3",
+    "zlib": "^1.0.5"
+  }
+}

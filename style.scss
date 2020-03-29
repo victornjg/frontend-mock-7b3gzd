@@ -1,0 +1,145 @@
+/* Add media query for devices under 576px of width. */
+/* Create Overlay to be used after while creating a new task*/
+/* (OPTIONAL) Use scss sintaxe on this file, make any necessary changes without breaking it. */
+
+html, body {
+  min-height: 100vh;
+
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS43WtuWrhfBvapywCjmOCoCypafBkzzhaHc0QpS_fcHX1jipeN');
+  font-family: 'Roboto', sans-serif;
+  color: #3a3a3a;
+}
+
+main {
+  /* center container. */
+}
+
+h1 {
+  text-align: center;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 30px;
+}
+
+.todo-list {
+  margin: 0;
+  background: #fff;
+  padding: 0 1em;
+  border-radius: 5px;
+  -webkit-box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.25);
+  -moz-box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.25);
+  box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.25);
+}
+
+.todo-list li {
+  width: 100%;
+  display: flex;
+  box-sizing: border-box;
+  position: relative;
+  border-bottom: 1px solid #ddd;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  outline: none;
+}
+
+.edit-field {
+  border-color: #c2c2c2;
+  flex-grow: 1;
+  margin-left: 8px;
+  font-size: 16px;
+  border-width: 2px;
+  border-left: none;
+  border-top: none;
+  border-right: none;
+  display: none;
+}
+
+.edit-field:focus {
+  border-color: #333;
+  outline: none;
+}
+
+.todo-list li:last-child {
+  border: none;
+}
+
+.todo-list li span {
+    font-size: 16px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    margin-left: 8px;
+}
+
+.todo-list li button {
+  color: #d5d5d5;
+  border: none;
+  padding: 0;
+  min-width: 32px;
+  min-height: 32px;
+  font-size: 1em;
+}
+
+.completed .btn-edit {
+  display: none;
+}
+
+.todo-list li span input[type=checkbox] {
+  margin-right: 7px;
+}
+
+.todo-list .completed span {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+.todo-list .completed button {
+  color: #388e3c;
+}
+
+form {
+  margin: 20px 0;
+  display: block;
+  height: 40px;
+}
+
+form input, form button {
+  display: block;
+  height: 40px;
+  border-radius: 5px 0px 0px 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  text-indent: 10px;
+  outline: none;
+  font-size: 14px;
+}
+
+form button {
+  background: #42a5f5;
+  border-color: #42a5f5;
+  color: #fff;
+  text-indent: 0px;
+  border-radius: 0px 5px 5px 0px;
+  cursor: pointer;
+}
+
+.btn {
+  display: block;
+  border-radius: 2px;
+  padding: 12px 24px;
+}
+
+.actions {
+  justify-content: flex-start;
+  align-content: center;
+}
+
+.actions a {
+  margin-left: 12px;
+}
+
